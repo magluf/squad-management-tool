@@ -1,4 +1,5 @@
 import React from "react";
+import classes from "./Layout.module.scss";
 import Toolbar from "./Toolbar/Toolbar";
 
 interface LayoutProps {
@@ -6,10 +7,10 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => (
-  <>
+  <div className={classes.Layout}>
     <Toolbar user="Bob Burnquist" />
-    <div>{children}</div>
-  </>
+    <div className={classes.Content}>{children}</div>
+  </div>
 );
 
 export default Layout;
