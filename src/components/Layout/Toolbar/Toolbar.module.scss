@@ -1,0 +1,38 @@
+.Toolbar {
+  height: 56px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgb(192, 14, 79);
+  background: linear-gradient(
+    90deg,
+    rgba(192, 14, 79, 1) 0%,
+    rgba(138, 32, 111, 1) 100%
+  );
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 90;
+}
+
+.Logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span {
+    padding-left: 10px;
+    font-weight: bold;
+    color: white;
+  }
+  img {
+    height: 70%;
+  }
+}
+
+.UserBox {
+  right: 0;
+}
