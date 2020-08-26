@@ -1,0 +1,111 @@
+.Table {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+  }
+
+  thead div {
+    border: 0;
+    border-radius: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: inherit;
+    padding: 0.5em;
+    margin-bottom: 1px;
+    text-transform: capitalize;
+  }
+
+  thead div.ascending::after {
+    content: "▼";
+    display: inline-block;
+    margin-left: 1em;
+  }
+
+  thead div.descending::after {
+    content: "▲";
+    display: inline-block;
+    margin-left: 1em;
+  }
+
+  thead tr th:first-child {
+    width: 30%;
+  }
+
+  thead tr th:last-child {
+    width: 20%;
+    text-align: right;
+  }
+
+  tbody {
+    margin-top: 2rem;
+  }
+
+  tbody td {
+    padding: 0.5em;
+    border-bottom: 1px solid #ccc;
+  }
+
+  tbody tr:last-child {
+    td {
+      border-bottom: 0;
+    }
+  }
+
+  tbody tr:hover {
+    background-color: #f7eef7;
+    color: #b13d7c;
+    font-weight: bold;
+  }
+
+  tbody tr td:last-child {
+    text-align: center;
+  }
+
+  td i {
+    padding: 0 0.25rem;
+    cursor: pointer;
+    font-size: larger;
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #444444;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -40px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #444444 transparent transparent transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+}
