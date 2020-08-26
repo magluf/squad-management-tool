@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classes from "./TeamFormation.module.scss";
 import { bc } from "../../util/bootstrap";
+import { FormationTypes } from "../../store/ducks/teams/types";
 
 const PlayerCircle = (index: number) => {
   return (
@@ -124,16 +125,13 @@ const TeamFormation = () => {
             className={bc("custom-select w-50")}
           >
             <option value="select">Choose formation...</option>
-            <option value="3 - 2 - 2 - 3">3 - 2 - 2 - 3</option>
-            <option value="3 - 2 - 3 - 1">3 - 2 - 3 - 1</option>
-            <option value="3 - 4 - 3">3 - 4 - 3</option>
-            <option value="3 - 5 - 2">3 - 5 - 2</option>
-            <option value="4 - 2 - 3 - 1">4 - 2 - 3 - 1</option>
-            <option value="4 - 3 - 2 - 1">4 - 3 - 2 - 1</option>
-            <option value="4 - 3 - 3">4 - 3 - 3</option>
-            <option value="4 - 4 - 2">4 - 4 - 2</option>
-            <option value="4 - 5 - 1">4 - 5 - 1</option>
-            <option value="5 - 4 - 1">5 - 4 - 1</option>
+            {Object.values(FormationTypes).map((key) => {
+              return !Number(key) && key !== 0 ? (
+                <option key={key} value={key}>
+                  {key}
+                </option>
+              ) : null;
+            })}
           </select>
         </div>
       </div>
