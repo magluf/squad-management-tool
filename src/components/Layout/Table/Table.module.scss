@@ -1,3 +1,5 @@
+@import "../../../assets/styles/variables.scss";
+
 .Table {
   table {
     width: 100%;
@@ -58,7 +60,7 @@
 
   tbody tr:hover {
     background-color: #f7eef7;
-    color: #b13d7c;
+    color: $pink-highlight;
     font-weight: bold;
   }
 

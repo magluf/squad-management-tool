@@ -1,0 +1,21 @@
+.TeamForm {
+  p {
+    color: #aaa;
+  }
+  input {
+    width: 100%;
+  }
+
+  .Description {
+    textarea {
+      resize: none;
+    }
+  }
+
+  .Tags {
+    textarea {
+      resize: none;
+      height: 150px;
+    }
+  }
+}

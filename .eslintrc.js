@@ -43,6 +43,7 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "jsx-a11y/interactive-supports-focus": "off",
     "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/camelcase": "off",
   },

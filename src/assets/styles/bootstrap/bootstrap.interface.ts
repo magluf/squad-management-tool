@@ -1,4 +1,4 @@
-export interface BootstrapClasses {
+export interface IBootstrapClasses {
   readonly h1: string;
   readonly h2: string;
   readonly h3: string;

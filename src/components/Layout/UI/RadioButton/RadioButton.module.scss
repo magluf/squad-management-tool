@@ -1,0 +1,46 @@
+@import "../../../../assets/styles/variables.scss";
+
+.RadioButton {
+  .modern-radio-container {
+    margin: 24px 0;
+    display: flex;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .radio-outer-circle {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    border: 2px solid $pink-highlight;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    transition: all 0.1s linear;
+  }
+
+  .radio-inner-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $pink-highlight;
+    transition: all 0.1s linear;
+  }
+  .unselected {
+    border: 2px solid #ccc;
+  }
+  .unselected-circle {
+    width: 0;
+    height: 0;
+  }
+  .helper-text.active {
+    color: $pink-highlight;
+    font-weight: bold;
+  }
+  .helper-text.inactive {
+    color: #ccc;
+  }
+}

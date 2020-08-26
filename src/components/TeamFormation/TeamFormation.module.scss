@@ -1,0 +1,85 @@
+.TeamFormation {
+  background-color: white;
+
+  .FormationField {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 60%;
+    height: 40vw;
+    border-radius: 5px;
+    background: linear-gradient(
+      0deg,
+      rgba(192, 14, 79, 1) 0%,
+      rgba(138, 32, 111, 1) 100%
+    );
+
+    .MidfieldCircle {
+      border: 2px solid rgba($color: #ccc, $alpha: 0.4);
+      border-radius: 100%;
+      width: 140px;
+      height: 140px;
+    }
+
+    .MidfieldLine {
+      position: absolute;
+      border: 1px solid rgba($color: #ccc, $alpha: 0.4);
+      width: 100%;
+    }
+  }
+}
+
+.PlayerCircleOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  border: 2px dashed rgba($color: #ccc, $alpha: 0.4);
+  width: 80px;
+  height: 80px;
+  .PlayerCircleInner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    border-radius: 100%;
+    background-color: rgba($color: #ccc, $alpha: 0.4);
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.FormationTacticsContainer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 95%;
+}
+
+.FormationSection {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Attackers {
+  flex: 2;
+  align-items: center;
+}
+
+.Midfielders {
+  flex: 1;
+  align-items: flex-start;
+}
+
+.Defenders {
+  flex: 1;
+  align-items: flex-start;
+}
+
+.Goalkeeper {
+  align-items: flex-end;
+}
