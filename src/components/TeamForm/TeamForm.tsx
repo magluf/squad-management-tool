@@ -256,7 +256,7 @@ const TeamInformationForm = () => {
 
 const ConfigureSquadForm = () => {
   return (
-    <div className={bc("col-12 px-5")}>
+    <div className={bc("col-12 px-5 pb-5")}>
       <div className={bc("text-center pt-4 font-weight-bold")}>
         <p>CONFIGURE SQUAD</p>
       </div>
@@ -266,6 +266,9 @@ const ConfigureSquadForm = () => {
             <div className={bc("form-row")}>
               <div className={bc("col justify-content-center mb-3 px-5")}>
                 <TeamFormation />
+                <button type="button" className={classes.SaveButton}>
+                  Save
+                </button>
               </div>
               <div className={bc("col mb-3 px-5")}>
                 <label

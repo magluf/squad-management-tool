@@ -11,4 +11,33 @@
       resize: none;
     }
   }
+
+  .SaveButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    border-radius: 5px;
+    height: 50px;
+    width: 520px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+
+    background: linear-gradient(
+      0deg,
+      rgba(168, 57, 125, 1) 0%,
+      rgba(124, 46, 129, 1) 100%
+    );
+
+    &:active {
+      transform: translateY(2px);
+      transition: 0.08s;
+      box-shadow: 1px 1px 1.5px rgba(0, 0, 0, 0.4);
+    }
+  }
 }
