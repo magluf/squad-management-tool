@@ -112,13 +112,10 @@ const TeamFormation = () => {
   return (
     <div className={classes.TeamFormation}>
       <div className={bc("form-group row")}>
-        <label
-          htmlFor="inputPassword"
-          className={bc("col-sm-2 col-form-label")}
-        >
+        <label className={bc("col-sm-2 col-form-label font-weight-bold")}>
           Formation
         </label>
-        <div className={bc("col-sm-10")}>
+        <div className={bc("col-sm-7")}>
           <select
             value={formation}
             onChange={(e) => onChangeFormationHandler(e)}

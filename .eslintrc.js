@@ -45,6 +45,8 @@ module.exports = {
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "react/no-array-index-key": "off",
+    "no-param-reassign": "off",
     "@typescript-eslint/camelcase": "off",
   },
 };
