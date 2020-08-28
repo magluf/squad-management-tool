@@ -5,6 +5,11 @@ export enum TeamsActionTypes {
   UPDATE_TEAM = "[Teams] Update Team",
 }
 
+export enum TeamTypes {
+  REAL = "real",
+  FANTASY = "fantasy",
+}
+
 export enum FormationTypes {
   "3 - 2 - 2 - 3",
   "3 - 2 - 3 - 1",
@@ -22,6 +27,8 @@ export interface Team {
   id: number;
   name: string;
   description: string;
+  type: TeamTypes;
+  website: string;
   formation: FormationTypes;
 }
 

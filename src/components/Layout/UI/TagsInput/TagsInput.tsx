@@ -11,10 +11,25 @@ const TagsInput = ({ tagList }: TagsInputProps) => {
   const removeTags = (indexToRemove: any) => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
+
+  const removeLastTag = () => {
+    const newTags = [...tags];
+    newTags.splice(-1);
+    setTags(newTags);
+  };
+
   const addTags = (event: any) => {
     if (event.target.value !== "") {
       setTags([...tags, event.target.value]);
       event.target.value = "";
+    }
+  };
+
+  const handleKeyUp = (e: any) => {
+    if (e.key === "Enter") {
+      addTags(e);
+    } else if (e.key === "Backspace") {
+      removeLastTag();
     }
   };
   return (
@@ -36,7 +51,7 @@ const TagsInput = ({ tagList }: TagsInputProps) => {
       <div className={classes.Input}>
         <input
           type="text"
-          onKeyUp={(event) => (event.key === "Enter" ? addTags(event) : null)}
+          onKeyUp={handleKeyUp}
           placeholder="Press enter to add a new tag"
         />
       </div>

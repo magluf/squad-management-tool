@@ -1,19 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+
 import classes from "./TeamForm.module.scss";
 import Card from "../Layout/Card/Card";
 import { bc } from "../../util/bootstrap";
 import RadioButton from "../Layout/UI/RadioButton/RadioButton";
 import TeamFormation from "../TeamFormation/TeamFormation";
-import TagsInput from "../Layout/UI/RadioButton/TagsInput/TagsInput";
-
-enum FormModes {
-  edit = "edit",
-  create = "create",
-}
-
-interface TeamFormProps {
-  mode: FormModes;
-}
+import TagsInput from "../Layout/UI/TagsInput/TagsInput";
+import { AppState } from "../../store/store";
+import { Team, TeamTypes } from "../../store/ducks/teams/types";
 
 const checkRequiredField = (value: string, required: boolean) => {
   let isValid = true;
@@ -25,7 +20,7 @@ const checkRequiredField = (value: string, required: boolean) => {
   return isValid;
 };
 
-const TeamInformationForm = () => {
+const TeamInformationForm = (team: Team | undefined) => {
   const [teamInformationForm, setTeamInformationForm] = useState({
     teamName: {
       value: "",
@@ -44,6 +39,32 @@ const TeamInformationForm = () => {
       validation: { valid: false, touched: false, rules: { required: true } },
     },
   });
+
+  useEffect(() => {
+    if (team) {
+      setTeamInformationForm((prevForm) => {
+        return {
+          ...prevForm,
+          teamName: {
+            ...prevForm.teamName,
+            value: team.name,
+          },
+          teamType: {
+            ...prevForm.teamType,
+            value: team.type,
+          },
+          description: {
+            ...prevForm.description,
+            value: team.description,
+          },
+          teamWebsite: {
+            ...prevForm.teamWebsite,
+            value: team.website,
+          },
+        };
+      });
+    }
+  }, [team]);
 
   return (
     <div className={bc("col-12 px-5")}>
@@ -209,7 +230,7 @@ const TeamInformationForm = () => {
                   <div className={bc("row mb-3")}>
                     <div className={bc("col-2")}>
                       <RadioButton
-                        value="first"
+                        value={TeamTypes.REAL}
                         selected={teamInformationForm.teamType.value}
                         text="Real"
                         onChange={() => {
@@ -217,7 +238,7 @@ const TeamInformationForm = () => {
                             ...teamInformationForm,
                             teamType: {
                               ...teamInformationForm.teamType,
-                              value: "first",
+                              value: TeamTypes.REAL,
                             },
                           });
                         }}
@@ -225,7 +246,7 @@ const TeamInformationForm = () => {
                     </div>
                     <div className={bc("col-3")}>
                       <RadioButton
-                        value="second"
+                        value={TeamTypes.FANTASY}
                         selected={teamInformationForm.teamType.value}
                         text="Fantasy"
                         onChange={() => {
@@ -233,7 +254,7 @@ const TeamInformationForm = () => {
                             ...teamInformationForm,
                             teamType: {
                               ...teamInformationForm.teamType,
-                              value: "second",
+                              value: TeamTypes.FANTASY,
                             },
                           });
                         }}
@@ -291,21 +312,32 @@ const ConfigureSquadForm = () => {
   );
 };
 
-const TeamFormBody = () => {
+const TeamFormBody = (team: Team | undefined) => {
   return (
     <>
-      <div>{TeamInformationForm()}</div>
+      <div>{TeamInformationForm(team)}</div>
       <div>{ConfigureSquadForm()}</div>
     </>
   );
 };
 
-const TeamForm = ({ mode }: TeamFormProps) => (
-  <div className={classes.TeamForm}>
-    <div className={bc("px-3")}>
-      <Card title="Create your team" content={TeamFormBody()} />
-    </div>
-  </div>
-);
+const TeamForm = (props: any) => {
+  let teamId = "";
+  if (props.match?.params?.id) {
+    teamId = props.match.params.id;
+  }
+  const teams: Team[] = props.teams;
+  const team = teams.find((t: Team) => t.id === +teamId);
 
-export default TeamForm;
+  return (
+    <div className={classes.TeamForm}>
+      <div className={bc("px-3")}>
+        <Card title="Create your team" content={TeamFormBody(team)} />
+      </div>
+    </div>
+  );
+};
+
+const mapStateToProps = (state: AppState) => ({ teams: state.teams.data });
+
+export default connect(mapStateToProps)(TeamForm);

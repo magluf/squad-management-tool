@@ -46,6 +46,8 @@ module.exports = {
     "jsx-a11y/label-has-associated-control": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "react/no-array-index-key": "off",
+    "react/destructuring-assignment": "off",
+    "prefer-destructuring": "off",
     "no-param-reassign": "off",
     "@typescript-eslint/camelcase": "off",
   },

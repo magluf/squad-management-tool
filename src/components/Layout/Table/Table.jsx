@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import PropTypes, { string } from "prop-types";
 
 import classes from "./Table.module.scss";
@@ -102,9 +103,14 @@ const Table = ({ tableItems, tableColumns }) => {
                   >
                     <span className={classes.tooltiptext}>Share</span>
                   </i>
-                  <i className={[classes.tooltip, "la la-pen"].join(" ")}>
-                    <span className={classes.tooltiptext}>Edit</span>
-                  </i>
+                  <NavLink
+                    className={classes.NavLink}
+                    to={`edit-team/${item.id}`}
+                  >
+                    <i className={[classes.tooltip, "la la-pen"].join(" ")}>
+                      <span className={classes.tooltiptext}>Edit</span>
+                    </i>
+                  </NavLink>
                 </td>
               ) : (
                 <td />

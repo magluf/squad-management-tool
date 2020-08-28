@@ -7,6 +7,7 @@ const AppRoutes = () => (
   <Switch>
     <Route path="/" exact component={Dashboard} />
     <Route path="/create-team" component={TeamForm} />
+    <Route path="/edit-team/:id" component={TeamForm} />
   </Switch>
 );
 
