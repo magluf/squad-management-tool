@@ -5,6 +5,7 @@ import { FormationTypes } from "../../store/ducks/teams/types";
 
 interface TeamFormationProps {
   formationIndex: FormationTypes | undefined;
+  onChangeFormation: (f: FormationTypes) => void;
 }
 
 const PlayerCircle = (index: number) => {
@@ -48,7 +49,10 @@ const PlayersSection = (size: number, type: any, id: string) => {
   );
 };
 
-const TeamFormation = ({ formationIndex }: TeamFormationProps) => {
+const TeamFormation = ({
+  formationIndex,
+  onChangeFormation,
+}: TeamFormationProps) => {
   const [formation, setFormation] = useState(
     formationIndex !== undefined ? FormationTypes[formationIndex] : "select"
   );
@@ -113,6 +117,7 @@ const TeamFormation = ({ formationIndex }: TeamFormationProps) => {
 
   const onChangeFormationHandler = (e: any) => {
     setFormation(e.target.value);
+    onChangeFormation(e.target.value);
   };
 
   return (

@@ -65,11 +65,12 @@ const INITIAL_STATE: TeamsState = {
 };
 
 const teamsReducer: Reducer<TeamsState> = (state = INITIAL_STATE, action) => {
+  console.log("action", action);
   switch (action.type) {
     case TeamsActionTypes.CREATE_TEAM:
       return {
         ...state,
-        data: state.data.concat(action.payload),
+        data: state.data.concat(action.payload.team),
       };
 
     case TeamsActionTypes.DELETE_TEAM:

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Dispatch, bindActionCreators } from "redux";
+
+import * as TeamActions from "../../store/ducks/teams/actions";
 
 import classes from "./TeamForm.module.scss";
 import Card from "../Layout/Card/Card";
@@ -8,7 +11,7 @@ import RadioButton from "../Layout/UI/RadioButton/RadioButton";
 import TeamFormation from "../TeamFormation/TeamFormation";
 import TagsInput from "../Layout/UI/TagsInput/TagsInput";
 import { AppState } from "../../store/store";
-import { Team, TeamTypes } from "../../store/ducks/teams/types";
+import { Team, TeamTypes, FormationTypes } from "../../store/ducks/teams/types";
 
 const checkRequiredField = (value: string, required: boolean) => {
   let isValid = true;
@@ -20,6 +23,14 @@ const checkRequiredField = (value: string, required: boolean) => {
   return isValid;
 };
 
+let isTeamInformationFormValid = false;
+let isConfigureSquadFormValid = false;
+
+let teamInformationFormValue: any;
+let configureSquadFormValue: FormationTypes | undefined | string = "select";
+
+let enableSave = false;
+
 const TeamInformationForm = (team: Team | undefined) => {
   const [teamInformationForm, setTeamInformationForm] = useState({
     teamName: {
@@ -28,7 +39,7 @@ const TeamInformationForm = (team: Team | undefined) => {
     },
     description: {
       value: "",
-      validation: { valid: false, touched: false, rules: { required: false } },
+      validation: { valid: true, touched: false, rules: { required: false } },
     },
     teamWebsite: {
       value: "",
@@ -65,6 +76,18 @@ const TeamInformationForm = (team: Team | undefined) => {
       });
     }
   }, [team]);
+
+  useEffect(() => {
+    isTeamInformationFormValid =
+      teamInformationForm.description.validation.valid &&
+      teamInformationForm.teamName.validation.valid &&
+      teamInformationForm.teamType.validation.valid &&
+      teamInformationForm.teamWebsite.validation.valid;
+
+    enableSave = isTeamInformationFormValid && isConfigureSquadFormValid;
+
+    teamInformationFormValue = teamInformationForm;
+  }, [teamInformationForm]);
 
   return (
     <div className={bc("col-12 px-5")}>
@@ -233,12 +256,21 @@ const TeamInformationForm = (team: Team | undefined) => {
                         value={TeamTypes.REAL}
                         selected={teamInformationForm.teamType.value}
                         text="Real"
-                        onChange={() => {
+                        onChange={(value: string) => {
                           setTeamInformationForm({
                             ...teamInformationForm,
                             teamType: {
                               ...teamInformationForm.teamType,
                               value: TeamTypes.REAL,
+                              validation: {
+                                ...teamInformationForm.teamType.validation,
+                                valid: checkRequiredField(
+                                  value,
+                                  teamInformationForm.teamType.validation.rules
+                                    .required
+                                ),
+                                touched: true,
+                              },
                             },
                           });
                         }}
@@ -249,12 +281,21 @@ const TeamInformationForm = (team: Team | undefined) => {
                         value={TeamTypes.FANTASY}
                         selected={teamInformationForm.teamType.value}
                         text="Fantasy"
-                        onChange={() => {
+                        onChange={(value: string) => {
                           setTeamInformationForm({
                             ...teamInformationForm,
                             teamType: {
                               ...teamInformationForm.teamType,
                               value: TeamTypes.FANTASY,
+                              validation: {
+                                ...teamInformationForm.teamType.validation,
+                                valid: checkRequiredField(
+                                  value,
+                                  teamInformationForm.teamType.validation.rules
+                                    .required
+                                ),
+                                touched: true,
+                              },
                             },
                           });
                         }}
@@ -275,7 +316,39 @@ const TeamInformationForm = (team: Team | undefined) => {
   );
 };
 
-const ConfigureSquadForm = (team: Team | undefined) => {
+const ConfigureSquadForm = (team: Team | undefined, createTeamHandler: any) => {
+  const [formation, setFormation] = useState(
+    team?.formation !== undefined ? team?.formation : undefined
+  );
+
+  const onChangeFormationHandler = (f: FormationTypes | string) => {
+    setFormation(f as FormationTypes);
+  };
+
+  const isFormationValid = (f: any) => {
+    return f !== "select" && f !== undefined;
+  };
+
+  const handleSaveTeam = (teamForm: any, configForm: any) => {
+    console.log("handleSaveTeam -> configForm", configForm);
+    console.log("handleSaveTeam -> teamForm", teamForm);
+    const t = {
+      id: Math.random(), // no time, life sucks...
+      name: teamForm.teamName.value,
+      description: teamForm.description.value,
+      type: teamForm.teamType.value,
+      formation: configForm,
+      website: teamForm.teamWebsite.value,
+    };
+    createTeamHandler(t);
+  };
+
+  useEffect(() => {
+    configureSquadFormValue = formation;
+    isConfigureSquadFormValid = isFormationValid(formation); // Typescript being a little bitch.
+    enableSave = isTeamInformationFormValid && isConfigureSquadFormValid;
+  }, [formation]);
+
   return (
     <div className={bc("col-12 px-5 pb-5")}>
       <div className={bc("text-center pt-4 font-weight-bold")}>
@@ -286,8 +359,23 @@ const ConfigureSquadForm = (team: Team | undefined) => {
           <form className={bc("needs-validation")}>
             <div className={bc("form-row")}>
               <div className={bc("col justify-content-center mb-3 px-5")}>
-                <TeamFormation formationIndex={team?.formation} />
-                <button type="button" className={classes.SaveButton}>
+                <TeamFormation
+                  formationIndex={formation}
+                  onChangeFormation={(f: FormationTypes) =>
+                    onChangeFormationHandler(f)
+                  }
+                />
+                <button
+                  disabled={!enableSave}
+                  onClick={() =>
+                    handleSaveTeam(
+                      teamInformationFormValue,
+                      configureSquadFormValue
+                    )
+                  }
+                  type="button"
+                  className={classes.SaveButton}
+                >
                   Save
                 </button>
               </div>
@@ -312,11 +400,16 @@ const ConfigureSquadForm = (team: Team | undefined) => {
   );
 };
 
-const TeamFormBody = (team: Team | undefined) => {
+const TeamFormBody = (
+  team: Team | undefined,
+  createTeam: any,
+  updateTeam: any,
+  deleteTeam: any
+) => {
   return (
     <>
       <div>{TeamInformationForm(team)}</div>
-      <div>{ConfigureSquadForm(team)}</div>
+      <div>{ConfigureSquadForm(team, createTeam)}</div>
     </>
   );
 };
@@ -332,7 +425,15 @@ const TeamForm = (props: any) => {
   return (
     <div className={classes.TeamForm}>
       <div className={bc("px-3")}>
-        <Card title="Create your team" content={TeamFormBody(team)} />
+        <Card
+          title="Create your team"
+          content={TeamFormBody(
+            team,
+            props.createTeam,
+            props.updateTeam,
+            props.deleteTeam
+          )}
+        />
       </div>
     </div>
   );
@@ -340,4 +441,7 @@ const TeamForm = (props: any) => {
 
 const mapStateToProps = (state: AppState) => ({ teams: state.teams.data });
 
-export default connect(mapStateToProps)(TeamForm);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(TeamActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamForm);
