@@ -275,7 +275,7 @@ const TeamInformationForm = (team: Team | undefined) => {
   );
 };
 
-const ConfigureSquadForm = () => {
+const ConfigureSquadForm = (team: Team | undefined) => {
   return (
     <div className={bc("col-12 px-5 pb-5")}>
       <div className={bc("text-center pt-4 font-weight-bold")}>
@@ -286,7 +286,7 @@ const ConfigureSquadForm = () => {
           <form className={bc("needs-validation")}>
             <div className={bc("form-row")}>
               <div className={bc("col justify-content-center mb-3 px-5")}>
-                <TeamFormation />
+                <TeamFormation formationIndex={team?.formation} />
                 <button type="button" className={classes.SaveButton}>
                   Save
                 </button>
@@ -316,7 +316,7 @@ const TeamFormBody = (team: Team | undefined) => {
   return (
     <>
       <div>{TeamInformationForm(team)}</div>
-      <div>{ConfigureSquadForm()}</div>
+      <div>{ConfigureSquadForm(team)}</div>
     </>
   );
 };

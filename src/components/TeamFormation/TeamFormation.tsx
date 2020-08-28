@@ -3,6 +3,10 @@ import classes from "./TeamFormation.module.scss";
 import { bc } from "../../util/bootstrap";
 import { FormationTypes } from "../../store/ducks/teams/types";
 
+interface TeamFormationProps {
+  formationIndex: FormationTypes | undefined;
+}
+
 const PlayerCircle = (index: number) => {
   return (
     <div key={index} className={classes.PlayerCircleOuter}>
@@ -44,8 +48,10 @@ const PlayersSection = (size: number, type: any, id: string) => {
   );
 };
 
-const TeamFormation = () => {
-  const [formation, setFormation] = useState("select");
+const TeamFormation = ({ formationIndex }: TeamFormationProps) => {
+  const [formation, setFormation] = useState(
+    formationIndex !== undefined ? FormationTypes[formationIndex] : "select"
+  );
 
   const [formationParams, setFormationParams] = useState([
     { id: "", type: "", qty: 0 },
